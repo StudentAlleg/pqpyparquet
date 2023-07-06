@@ -2,13 +2,13 @@
 #turn it into a paraquet. Given a paraquet with the same nature, turn it into a json
 
 
-import pyarrow
-import pyarrow.parquet
-import pandas
+
+import pyarrow as PyA
 import json
 import sys
 
 def writeToParaquet(inFile: str, outFile: str):
+    import pandas as Pa
     #first, open the json file
     inF = open(inFile)
 
@@ -32,13 +32,13 @@ def writeToParaquet(inFile: str, outFile: str):
     #we will use a pandas data frame
 
 
-    dataFrame = pandas.DataFrame({
+    dataFrame = Pa.DataFrame({
         "address" : columnAddress,
         "iteration" : columnIteration
     })
-
-    table = pyarrow.Table.from_pandas(dataFrame)
-    pyarrow.parquet.write_table(table, outFile)
+#add_column
+    table = PyA.Table.from_pandas(dataFrame)
+    PyA.parquet.write_table(table, outFile)
     print(f"Wrote {inFile} to {outFile}")
 
 
@@ -48,8 +48,8 @@ def writeToParaquet(inFile: str, outFile: str):
 
 
 if __name__ == "__main__":
-    if len(sys.argv != 3):
-        print("Usage: python3 pyarrow.py inFile.json outFile.parquet")
+    if len(sys.argv) != 3:
+        print("Usage: python ./pyarrow.py inFile.json outFile.parquet")
         exit(1)
     
     #TODO check to see filenames
