@@ -77,5 +77,5 @@ if __name__ == "__main__":
 
     writeToParaquet(sys.argv[1], sys.argv[2])
     readParquet(sys.argv[2])
-    writeToJson(sys.argv[2], "tempCompare.json")
+    #writeToJson(sys.argv[2], "tempCompare.json")
 
