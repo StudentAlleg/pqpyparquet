@@ -47,22 +47,22 @@ def writeToParaquet(inFile: str, outFile: str):
     print(f"Wrote {inFile} to {outFile}")
 
 #TODO reverse a paraquet back into json
-def writeToJson(inFile: str, outFile: str):
-    import pyarrow
-    #get the arrow table from the parquet file
-    table = parquet.read_table(inFile)
-
-    #convert it to a python dictionary
-    dataDict = table.to_pydict()
-
-    jsonData = []
-
-    #now, iterate through dataDict and reconstruct the original json file
-    for i in len(dataDict["address"]): 
-        jsonData.insert(0, {"address" : dataDict["address"][i], 
-                            "iteration" : dataDict["iteration"][i]})
-    outF = open(outFile, "w")
-    json.dump(outF)
+#def writeToJson(inFile: str, outFile: str):
+#    import pyarrow
+#    #get the arrow table from the parquet file
+#    table = parquet.read_table(inFile)
+#
+#    #convert it to a python dictionary
+#    dataDict = table.to_pydict()
+#
+#    jsonData = []
+#
+#    #now, iterate through dataDict and reconstruct the original json file
+#    for i in len(dataDict["address"]): 
+#        jsonData.insert(0, {"address" : dataDict["address"][i], 
+#                            "iteration" : dataDict["iteration"][i]})
+#    outF = open(outFile, "w")
+#    json.dump(outF)
 
 
 
