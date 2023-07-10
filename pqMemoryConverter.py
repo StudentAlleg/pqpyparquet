@@ -16,24 +16,30 @@ def writeToParaquet(inFile: str, outFile: str):
     #[{address: int, iteration: int},
     # {address: int, iteration: int}]
     #We need to change this into a two column table
-
-    columnAddress = []
-    columnIteration = []
     
     jsonData = json.load(inF)
     
     assert (type(jsonData) == list)
-    
+    dataDict = {}
+    #iterate through the list
     for obj in jsonData:
-        columnAddress.append(obj["address"])
-        columnIteration.append(obj["iteration"])
-    
-    #we now have our columns, so lets make the table
-
-    dataDict = {
-        "address": columnAddress,
-        "iteration": columnIteration
-    }
+        #iterate through the dictionary
+        assert (type(obj) == dict)
+        for key in obj.keys():
+            #if we have seen this key before
+            #a better way might be to try the operation
+            #and on error, make the new key in dataDict
+            #and properly initialize
+            if key in dataDict:
+                dataDict[key].append(obj[key])
+            else:
+                #the key does not exist, so make an entry
+                #in dataDict thatis a list with 1 item
+                #this is normal behavior on the first obj
+                #but on the next, it would cause problems
+                #TODO support json objects that have different variables
+                #per object
+                dataDict[key] = [obj[key]]
 
     table = pyarrow.Table.from_pydict(dataDict)
 
